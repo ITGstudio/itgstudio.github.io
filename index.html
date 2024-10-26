@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Letter</title>
+  <style>
+    /* Fullscreen settings and background color */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #001f3f; /* Dark sea color */
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      color: #00f5ff;
+    }
+    
+    /* Initial button style */
+    .button {
+      font-size: 24px;
+      padding: 15px 30px;
+      cursor: pointer;
+      border: none;
+      background-color: #00f5ff;
+      color: #001f3f;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Hover effect for the button */
+    .button:hover {
+      background-color: #009bb5;
+    }
+    
+    /* Vertically centered, fixed text container */
+    #text-container {
+      padding-left: 20px;
+      padding-right: 20px;
+      display: none;
+      max-width: 600px;
+      font-size: 20px;
+      line-height: 1.6;
+      display: flex;
+      flex-wrap: wrap; /* Wrap to keep words unbroken */
+      justify-content: center;
+      white-space: pre-wrap;
+      text-align: center;
+      position: fixed; /* Fixes the container in the center */
+      top: 5%;
+    /*   transform: translateY(-50%); /* Centers the container vertically */ */
+    }
+    
+    /* Fade-in effect for each character */
+    .char {
+      display: inline-block;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards; /* Duration of fade-in effect */
+      color: #00f5ff;
+      text-shadow: 0 0 8px #00f5ff, 0 0 12px #00d1e0, 0 0 16px #009ba6;
+    }
+    
+    /* Keyframe animation for fade-in */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Word wrapper */
+    .word {
+      display: inline-flex;
+      margin-right: 4px; /* Space between words */
+    }
+  </style>
+</head>
+<body>
+  <!-- Button to start the letter animation -->
+  <button class="button" onclick="startTyping()">Reveal the Letter</button>
+
+  <!-- Container for the love letter text -->
+  <div id="text-container"></div>
+
+  <script>
+    // The love letter text
+    const letterText = `Любимая, мне захотелось сделать для тебя что-то необычное. 
+    Я никогда не делал ничего подобного, и я уверен, что ты никогда 
+    ничего похожего не видела. Эта идея мне пришла совсем случайно, 
+    когда я делал домашнее задание по курсу. И я решил написать этот сайт. 
+    Милая, я так счастлив, что ты у меня есть. Я никогда не имел такой заботы, 
+    которой меня окружаешь ты. Я никогда не чувствовал большей любви, тепла 
+    и близости. Спасибо тебе за все, что ты для меня делаешь. Времени, 
+    проведенного с тобой, всегда кажется мало, всегда хочется удержать этот 
+    момент, остановить время и быть только рядом с тобой, только вместе. 
+    Я люблю тебя, солнце, ты мое настоящее сокровище ❤️`;
+function startTyping() {
+      document.querySelector('.button').style.display = 'none';
+      const textContainer = document.getElementById('text-container');
+      textContainer.style.display = 'flex';
+
+      const words = letterText.split(" ");
+      let wordIndex = 0;
+
+      function typeWord() {
+        if (wordIndex < words.length) {
+          // Create a span for each word
+          const wordSpan = document.createElement('span');
+          wordSpan.classList.add('word');
+
+          // Wrap each character of the word in a span
+          words[wordIndex].split('').forEach((char, charIndex) => {
+            const charSpan = document.createElement('span');
+            charSpan.textContent = char;
+            charSpan.classList.add('char');
+            charSpan.style.animationDelay = `${(wordIndex * 0.3) + (charIndex * 0.05)}s`; // Stagger effect
+            wordSpan.appendChild(charSpan);
+          });
+
+          textContainer.appendChild(wordSpan);
+          wordIndex++;
+          setTimeout(typeWord, 70); // Delay between words
+        }
+      }
+
+      typeWord();
+    }
+  </script>
+</body>
+</html>
